@@ -269,7 +269,7 @@ async def round_video_handler(message: Message, bot: Bot):
     temp_dir = tempfile.mkdtemp(prefix="round_video_")
     input_path = os.path.join(temp_dir, "input.mp4")
     output_path = os.path.join(temp_dir, "output.mp4")
-
+    msg = await message.answer("Video tayyorlanmoqda... ⏳")
     try:
         await bot.download(message.video_note, destination=input_path)
         duration = await get_duration(input_path)
@@ -288,10 +288,12 @@ async def round_video_handler(message: Message, bot: Bot):
             "created_at": time.time(),
         }
 
-        await message.answer_video(
-            video=FSInputFile(output_path, filename="video.mp4"),
-            supports_streaming=True,
-            reply_markup=main_keyboard(token),
+        await msg.edit_media(
+            media=InputMediaVideo(
+                media=FSInputFile(output_path, filename="video.mp4"),
+                supports_streaming=True,
+                reply_markup=main_keyboard(token),
+            )
         )
 
     except Exception as error:
