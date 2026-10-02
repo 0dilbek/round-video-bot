@@ -3,6 +3,8 @@ from aiogram  import Bot, Dispatcher
 from asyncio import run
 from config import BOT_TOKEN
 from logging import basicConfig, INFO
+from aiogram.filters import CommandStart
+from aiogram.types import Message
 
 basicConfig(
     level=INFO,
@@ -12,6 +14,12 @@ basicConfig(
 dp = Dispatcher()
 
 dp.include_router(router)
+
+@dp.message(CommandStart())
+async def start(message: Message):
+    await message.answer(
+        "Salom! Men sizning dumaloq videolaringizni standart videoga aylantirib beraman."
+    )
 
 async def main():
     bot = Bot(
