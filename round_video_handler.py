@@ -292,8 +292,8 @@ async def round_video_handler(message: Message, bot: Bot):
             media=InputMediaVideo(
                 media=FSInputFile(output_path, filename="video.mp4"),
                 supports_streaming=True,
-                reply_markup=main_keyboard(token),
-            )
+            ),
+            reply_markup=main_keyboard(token),
         )
 
     except Exception as error:
